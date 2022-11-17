@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <script src = "jquery-3.6.1.min.js"></script>
+    <script type = "text/javascript">
+
+    function reload() {
+        $.ajax({url: "playerHandler.php", success: function(data) {
+            $("#player").html(data);
+        }});
+        $.ajax({url: "tableHandler.php", success: function(data) {
+            $("#table").html(data);
+        }});
+        $.ajax({url: "clockHandler.php", success: function(data) {
+            $("#time").html(data);
+        }});
+    }
+  
+    $(document).ready(function() { 
+        cycle = setInterval(reload, 1000);
+    });
+
+    </script>
+</head>
+
+<body>
+    <div id = activeGame>
+        <span id = "player"></span>
+        <span id = "time">000</span>
+    </div>
+    <br><br>
+    <div id = "table"></div>
+    
+</body>
+</html>

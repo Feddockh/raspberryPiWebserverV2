@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src = "jquery-3.6.1.min.js"></script>
+    <script type = "text/javascript">
+
+    $(document).ready(function() {
+        $("#getUserInfo").click(function () {
+            var username = $("#username").val();
+            $.post('entryHandler.php', {'username': username});
+            alert("Participant Entered");
+            $("#username").val("");
+        });
+    });
+
+    </script>
+</head>
+
+<body>
+    username: <input type="text" id="username"><br>
+    <button type="button" id="getUserInfo">Submit</button>
+</body>
+
+</html>
