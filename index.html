@@ -7,29 +7,28 @@
     <script type = "text/javascript">
 
     function reload() {
+        $.ajax({url: "clockHandler.php", success: function(data) {
+            $("#cdTimer").html(data);
+        }});
         $.ajax({url: "playerHandler.php", success: function(data) {
-            $("#player").html(data);
+            $("#currentPlayer").html(data);
         }});
         $.ajax({url: "tableHandler.php", success: function(data) {
             $("#table").html(data);
         }});
-        $.ajax({url: "clockHandler.php", success: function(data) {
-            $("#time").html(data);
-        }});
     }
   
     $(document).ready(function() { 
-        cycle = setInterval(reload, 1000);
+        cycle = setInterval(reload, 500);
     });
 
     </script>
 </head>
 
 <body>
-    <div id = activeGame>
-        <span id = "player"></span>
-        <span id = "time">000</span>
-    </div>
+    <div id = "cdTimer">5:00</div>
+    <br><br>
+    <div id = "currentPlayer"></div>
     <br><br>
     <div id = "table"></div>
     

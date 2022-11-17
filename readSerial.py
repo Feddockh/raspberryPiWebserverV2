@@ -5,21 +5,16 @@ import pyftdi.serialext
 port = pyftdi.serialext.serial_for_url('ftdi://ftdi:ft-x:08-15/1', baudrate=9600)
 
 # Send bytes
-#port.write(b'0')
-port.write('0')
-
-print("aaayyyyy it works")
-# I just had to update the user group
+port.write('0'.encode('UTF-8'))
 
 # Receive bytes
-#data = port.read(3)
-#print(data.decode('UTF-8'))
+data1 = port.read(3)
+data1 = data1.decode('UTF-8')
 
+if data1 == 'END':
+    port.write('1'.encode('UTF-8'))
+    data2 = port.read(3)
+    data2 = data2.decode('UTF-8')
+    print(data2)
 
-#print('0')
-# Encoding converts strings to bytes
-#print('0'.encode('UTF-8'))
-#print(len('0'.encode('UTF-8')))
-# Decoding converts bytes to strings
-#print(b'0'.decode('UTF-8'))
-#print(len(b'0'.decode('UTF-8')))
+print(data1)
