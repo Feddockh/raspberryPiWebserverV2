@@ -15,7 +15,7 @@
     // Begin the table by setting the headers for each column
     if ($result->num_rows > 0) {
         $table = "
-            <table border = 1> 
+            <table> 
                 <tr>
                     <th> Rank </th>
                     <th> Username </th>

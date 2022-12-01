@@ -2,7 +2,7 @@
     $output = null;
     $result_code = null;
 
-    exec('/bin/python /var/www/html/readSerial.py', $output, $result_code);
+    //exec('/bin/python /var/www/html/readSerial.py', $output, $result_code);
 
     // Server parameters
     $servername = "localhost";

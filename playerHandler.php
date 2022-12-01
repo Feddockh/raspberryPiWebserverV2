@@ -13,18 +13,18 @@
     if ($result->num_rows > 0) {
         $row = $result->fetch_array();
 
+        /*
         $table = "
-            <table border = 1> 
+            <table>
                 <tr>
-                    <th> Current Player </th>
-                    
-                </tr>
-                <tr>
-                    <td>" . $row["username"] . " - " . $row["time"] . "</td>
+                    <td>" . $row["username"] . "</td>
+                    <td>" . $row["time"] . "</td>
                 </tr>
         ";
 
         echo $table;
+        */
+        echo $row["username"] . " " . $row["time"];
     }
 
     $connection->close();
