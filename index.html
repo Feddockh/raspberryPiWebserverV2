@@ -8,13 +8,25 @@
     <script src = "jquery-3.6.1.min.js"></script>
     <script type = "text/javascript">
 
+    var json_file = '/webdata/data.json';
+
+    function formatTime(totalSeconds) {
+        // Write code for function here, or pass this off to python function
+    }
+
     function reload() {
+        $.getJSON(json_file, function(data) {
+            player = data["username"];
+            $("#player").html(player);
+            val = data["time"];
+            $("#playerTime").html(val);
+        });
         //$.ajax({url: "clockHandler.php", success: function(data) {
         //    $("#time").html(data);
         //}});
-        $.ajax({url: "playerHandler.php", success: function(data) {
-            $("#playerInfo").html(data);
-        }});
+        //$.ajax({url: "playerHandler.php", success: function(data) {
+        //    $("#playerInfo").html(data);
+        //}});
         $.ajax({url: "tableHandler.php", success: function(data) {
             $("#scoreboard").html(data);
         }});
@@ -36,7 +48,10 @@
             </div>
             <div class = "player-container">
                 <h4 id = "current-player">Current Player</h4>
-                <div id = "playerInfo"></div>
+                <div id = "playerInfo">
+                    <div id = "player"></div>
+                    <div id = "playerTime"></div>
+                </div>
             </div>
         </div>
         <div class = "flex-right-container">
