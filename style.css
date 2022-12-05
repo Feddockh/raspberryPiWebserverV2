@@ -1,7 +1,7 @@
 body {
     display: block;
     width: 100%;
-    height: 100vh;
+    height: 95vh;
     margin: 0;
     border: 0;
     padding: 0;
@@ -12,7 +12,7 @@ body {
 .top-band {
     display: block;
     width: 100%;
-    height: 15%;
+    height: 13%;
     border: 0;
     padding: 0;
     margin: 2% 0 1% 0;
@@ -24,7 +24,7 @@ body {
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    height: 82%;
+    height: 78%;
     margin: 0;
     border: 0;
     padding: 0;
@@ -38,49 +38,123 @@ body {
     width: 40%;
     height: 100%;
     margin: 0;
-    border: 1px solid red;
+    border: 1px solid blue;
     padding: 0;
 }
 
-.clock-container {
+#clockTime {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 80%;
     height: 25%;
     margin: 2% 0 2% 0;
-    border: 1px solid black;
+    border: 2px solid rgb(8, 68, 84);
     padding: 0;
+    color: rgb(203,100,35);
+    font-size: 10vw;
     background-color: white;
-}
-
-#time {
-
 }
 
 .player-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: space-between;
+    width: 80%;
+    height: 25%;
+    margin: 2% 0 2% 0;
+    border: 1px solid blue;
+    padding: 0;
 }
 
-h4 {
-    text-align: center;
-}
-
-#playerInfo {
+#current-player {
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 40%;
+    margin: 0 10% 2% 10%;
+    border: 2px solid white;
+    padding: 0;
+    color: white;
+    font-size: 2vw;
+    background-color: rgb(8, 68, 84);
+}
+
+#player-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 50%;
+    margin: 2% 5% 0 5%;
+    border: 2px solid rgb(8, 68, 84);
+    color: black;
+    font-size: 2vw;
+    background-color: white;
+}
+
+#player {
+    
+}
+
+#playerTime {
+    
 }
 
 .flex-right-container {
     display: flex;
+    justify-content: flex-start;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
     width: 60%;
+    height: 100%;
+    margin: 0;
     border: 1px solid red;
+    padding: 0;
+}
+
+#current-standings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 10%;
+    margin: 0 10% 0 10%;
+    border: 2px solid rgb(8, 68, 84);
+    padding: 0;
+    color: black;
+    font-size: 2.5vw;
+    background-color: white;
+}
+
+#scoreboard {
+    width: 80%;
+    height: 90%;
+    border: 2px solid rgb(8, 68, 84);
 }
 
 table {
-    border: 1px solid;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgb(8, 68, 84);
+    padding: 0;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th {
+    border: 1px solid white;
+    color: white;
+    font-size: 2vw;
+    background-color: rgb(8, 68, 84);
+}
+
+td {
+    border: 1px solid rgb(8, 68, 84);
+    color: black;
+    font-size: 2vw;
+    text-align: center;
 }
 

@@ -29,8 +29,8 @@
             $json_string = file_get_contents($json_file);
             $playerInfo = json_decode($json_string, true);
 
-            // Update the username
-            $playerInfo['username'] = $_POST['username'];
+            // Update the player's username
+            $playerInfo['player'] = $_POST['username'];
 
             // Encode and put the data back into the json file
             $json_string = json_encode($playerInfo, JSON_PRETTY_PRINT);
