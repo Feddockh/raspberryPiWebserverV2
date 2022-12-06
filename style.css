@@ -1,12 +1,46 @@
-body {
-    display: block;
+@font-face {
+    font-family: 'Volvo Broad';
+    src: url('volvo_broad_pro_digital.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Medium';
+    src: url('/fonts/VolvoNovum-Medium.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Regular';
+    src: url('/fonts/VolvoNovum-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum SemiLight';
+    src: url('/fonts/VolvoNovum-SemiLight.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Light';
+    src: url('/fonts/VolvoNovum-Light.otf');
+} 
+
+html, body {
+    height: 100%;
     width: 100%;
-    height: 95vh;
+    margin: 0;
+}
+
+.full-screen {
+    display: block;
+    width: 100vw;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
     margin: 0;
     border: 0;
     padding: 0;
     background-color: rgb(160, 186, 184);
-    /* overflow-y: hidden; */
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .top-band {
@@ -17,6 +51,14 @@ body {
     padding: 0;
     margin: 2% 0 1% 0;
     background-color: rgb(8, 68, 84);
+}
+
+img {
+    display: block;
+    width: min-content;
+    height: 100%;
+    margin: auto;
+    border: 1px solid yellow;
 }
 
 .flex-container {
@@ -38,7 +80,7 @@ body {
     width: 40%;
     height: 100%;
     margin: 0;
-    border: 1px solid blue;
+    border: 0;
     padding: 0;
 }
 
@@ -49,10 +91,12 @@ body {
     width: 80%;
     height: 25%;
     margin: 2% 0 2% 0;
-    border: 2px solid rgb(8, 68, 84);
+    border: 3px solid rgb(8, 68, 84);
     padding: 0;
     color: rgb(203,100,35);
+    font-family: 'Courier New', Courier, monospace;
     font-size: 10vw;
+    letter-spacing: 1px;
     background-color: white;
 }
 
@@ -64,7 +108,7 @@ body {
     width: 80%;
     height: 25%;
     margin: 2% 0 2% 0;
-    border: 1px solid blue;
+    border: 0;
     padding: 0;
 }
 
@@ -75,9 +119,10 @@ body {
     width: 80%;
     height: 40%;
     margin: 0 10% 2% 10%;
-    border: 2px solid white;
+    border: 3px solid white;
     padding: 0;
     color: white;
+    font-family: 'Volvo Novum SemiLight';
     font-size: 2vw;
     background-color: rgb(8, 68, 84);
 }
@@ -89,9 +134,10 @@ body {
     width: 90%;
     height: 50%;
     margin: 2% 5% 0 5%;
-    border: 2px solid rgb(8, 68, 84);
+    border: 3px solid rgb(8, 68, 84);
     color: black;
-    font-size: 2vw;
+    font-family: 'Volvo Novum Regular';
+    font-size: 3vw;
     background-color: white;
 }
 
@@ -111,7 +157,7 @@ body {
     width: 60%;
     height: 100%;
     margin: 0;
-    border: 1px solid red;
+    border: 0;
     padding: 0;
 }
 
@@ -119,26 +165,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: calc(80% - 5px);
     height: 10%;
     margin: 0 10% 0 10%;
-    border: 2px solid rgb(8, 68, 84);
+    border: 3px solid rgb(8, 68, 84);
+    border-bottom: 0;
     padding: 0;
     color: black;
-    font-size: 2.5vw;
+    font-family: 'Volvo Novum Regular';
+    font-size: 3vw;
     background-color: white;
 }
 
 #scoreboard {
     width: 80%;
     height: 90%;
-    border: 2px solid rgb(8, 68, 84);
 }
 
 table {
     width: 100%;
     height: 100%;
-    border: 2px solid rgb(8, 68, 84);
+    border: 3px solid rgb(8, 68, 84);
     padding: 0;
     border-collapse: collapse;
     background-color: white;
@@ -147,6 +194,7 @@ table {
 th {
     border: 1px solid white;
     color: white;
+    font-family: 'Volvo Novum SemiLight';
     font-size: 2vw;
     background-color: rgb(8, 68, 84);
 }
@@ -154,7 +202,17 @@ th {
 td {
     border: 1px solid rgb(8, 68, 84);
     color: black;
+    font-family: 'Volvo Novum Light';
     font-size: 2vw;
     text-align: center;
 }
 
+.bottom-band {
+    display: block;
+    width: 80%;
+    height: 5%;
+    border: 0;
+    padding: 0;
+    margin: 1% 10% 0 10%;
+    background-color: rgb(8, 68, 84);
+}

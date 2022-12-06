@@ -3,7 +3,6 @@
 
 
 <head>
-
     <link rel = "stylesheet" href = "style.css">
     <script src = "jquery-3.6.1.min.js"></script>
     <script type = "text/javascript">
@@ -31,27 +30,42 @@
         cycle = setInterval(reload, 500);
     });
 
+    addEventListener("click", function() {
+        var
+            el = document.documentElement
+            , rfs =
+                el.requestFullScreen
+                || el.webkitRequestFullScreen
+                || el.mozRequestFullScreen
+        ;
+        rfs.call(el);
+    });
+
     </script>
 </head>
 
 <body>
-    <div class = "top-band"></div>
-    <div class = "flex-container">
-        <div class = "flex-left-container">
-            <h1 id = "clockTime"></h1>
-            <div class = "player-container">
-                <h4 id = "current-player">Current Player</h4>
-                <div id = "player-info">
-                    <h2 id = "player"></h2>
-                    <h2 id = "playerTime"></h2>
+    <div class = "full-screen">
+        <div class = "top-band">
+            <img id = "logo" src = "Volvo Logo.png">
+        </div>
+        <div class = "flex-container">
+            <div class = "flex-left-container">
+                <h1 id = "clockTime"></h1>
+                <div class = "player-container">
+                    <h4 id = "current-player">Current Player</h4>
+                    <div id = "player-info">
+                        <h3 id = "player"></h3>
+                        <h3 id = "playerTime"></h3>
+                    </div>
                 </div>
             </div>
+            <div class = "flex-right-container">
+                <h3 id = "current-standings">Current Standings</h3>
+                <div id = "scoreboard"></div>
+            </div>
         </div>
-        <div class = "flex-right-container">
-            <h3 id = "current-standings">Current Standings</h3>
-            <div id = "scoreboard"></div>
-        </div>
+        <div class = "bottom-band"></div>
     </div>
-    <div class = "bottomBand"></div>
 </body>
 </html>
