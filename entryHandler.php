@@ -1,6 +1,6 @@
 <?php
 
-    $json_file = 'webdata/data.json';
+    $json_file = 'data.json';
 
     // Check if there are new names to be added
     if (array_key_exists('username', $_POST)) {
@@ -38,9 +38,9 @@
         }
 
         // Insert new player into queue 
-        //$sql = "INSERT INTO queue (username) 
-        //    VALUES ('" . $_POST['username'] . "')"; // Formatting odd, had to pass as strings using '' inside of the ""
-        //$connection->query($sql);
+        $sql = "INSERT INTO queue (username) 
+            VALUES ('" . $_POST['username'] . "')"; // Formatting odd, had to pass as strings using '' inside of the ""
+        $connection->query($sql);
         
         $connection->close();
     }

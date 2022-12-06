@@ -1,26 +1,26 @@
 @font-face {
     font-family: 'Volvo Broad';
-    src: url('volvo_broad_pro_digital.otf');
+    src: url('fonts/volvo_broad_pro_digital.otf');
 }
 
 @font-face {
     font-family: 'Volvo Novum Medium';
-    src: url('/fonts/VolvoNovum-Medium.otf');
+    src: url('fonts/VolvoNovum-Medium.otf');
 }
 
 @font-face {
     font-family: 'Volvo Novum Regular';
-    src: url('/fonts/VolvoNovum-Regular.otf');
+    src: url('fonts/VolvoNovum-Regular.otf');
 }
 
 @font-face {
     font-family: 'Volvo Novum SemiLight';
-    src: url('/fonts/VolvoNovum-SemiLight.otf');
+    src: url('fonts/VolvoNovum-SemiLight.otf');
 }
 
 @font-face {
     font-family: 'Volvo Novum Light';
-    src: url('/fonts/VolvoNovum-Light.otf');
+    src: url('fonts/VolvoNovum-Light.otf');
 } 
 
 html, body {
@@ -58,7 +58,7 @@ img {
     width: min-content;
     height: 100%;
     margin: auto;
-    border: 1px solid yellow;
+    border: 0;
 }
 
 .flex-container {
