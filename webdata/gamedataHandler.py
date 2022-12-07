@@ -42,14 +42,16 @@ while (True):
     #with open('/home/vce/Project/timeSim.txt') as f:
     #    data = f.read(3)
 
+    # TODO: Make it so that SQL database is checked each cycle
+        # Check to see if lowest id name matches the json file, and update it if it does not (this will allow us to skip players)
+        # Pull the next up player and add them to the json file as well (also helps when skipping players)
+        # Potentially absorb the tableHandler php script and put that data into the json file as well (reduces the amount of entries into the sql database since other users will now be pulling from the php file)
+            # Remove table tags from the string returned by the php script and move table into index.html and then properly format table in css (fixes table size bug)
+     
+
     # Convert string data to numerical seconds value for comparison
-    # ERROR: ValueError: invalid literal for int() with base 10: ''
     second = int(data[0])
     pole = int(data[1])
-
-    # TODO: Incorperate a 'next up' feature
-
-    # TODO: Incorperate number of polls completed, add that into logic that determines when to move names from queue into scoreboard
 
     # If the second changed, then update the time (JSON)
     if (second != lastSecond or pole != lastPole):
@@ -73,7 +75,8 @@ while (True):
         # Write the json-formatted string back to our json file
         with open(json_file, 'w') as f:
             f.write(json_string)
- 
+    
+
     # If the game is completed, store the players time (SQL) and transfer the player from queue to the leaderboard (SQL), check for a new player and move them into the current player spot (SQL -> JSON)
     if (second == 0 and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
         
