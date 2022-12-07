@@ -9,7 +9,7 @@
     $connection = new mysqli($servername, $username, $password, $database);
 
     // ORDER BY clause used to sort records in ascending order
-    $sql = "SELECT username, time, score FROM scoreboard ORDER BY score ASC LIMIT 10";
+    $sql = "SELECT username, time, poles, score FROM scoreboard ORDER BY score DESC LIMIT 10";
     $result = $connection->query($sql);
 
     // Begin the table by setting the headers for each column
@@ -20,6 +20,7 @@
                     <th> Rank </th>
                     <th> Username </th>
                     <th> Time </th>
+                    <th> Poles </th>
                 </tr>
         ";
 
@@ -31,6 +32,7 @@
                     <td>" . $i . "</td>
                     <td>" . $row["username"] . "</td>
                     <td>" . $row["time"] . "</td>
+                    <td>" . $row["poles"] . "</td>
                 </tr>
             ";
             $i++;

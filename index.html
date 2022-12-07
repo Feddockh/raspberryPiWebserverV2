@@ -18,6 +18,24 @@
                 $("#clockTime").html(data["clockTime"]);
                 $("#player").html(data["player"]);
                 $("#playerTime").html(data["playerTime"]);
+                if (data["pole"] == 0) {
+                    $("#pole1").css('visibility', 'hidden');
+                    $("#pole2").css('visibility', 'hidden');
+                    $("#pole3").css('visibility', 'hidden');
+                    $("#pole4").css('visibility', 'hidden');
+                }
+                if (data["pole"] == 1) {
+                    $("#pole1").css('visibility', 'visible');
+                }
+                if (data["pole"] == 2) {
+                    $("#pole2").css('visibility', 'visible');
+                }
+                if (data["pole"] == 3) {
+                    $("#pole3").css('visibility', 'visible');
+                }
+                if (data["pole"] == 4) {
+                    $("#pole4").css('visibility', 'visible');
+                }
             }
         });
 
@@ -47,7 +65,7 @@
 <body>
     <div class = "full-screen">
         <div class = "top-band">
-            <img id = "logo" src = "Volvo Logo.png">
+            <img id = "logo" src = "/artwork/Volvo Logo.png">
         </div>
         <div class = "flex-container">
             <div class = "flex-left-container">
@@ -57,6 +75,12 @@
                     <div id = "player-info">
                         <h3 id = "player"></h3>
                         <h3 id = "playerTime"></h3>
+                    </div>
+                    <div id = "playerPoles">
+                        <img id = "pole1" src = "/artwork/pole.png">
+                        <img id = "pole2" src = "/artwork/pole.png">
+                        <img id = "pole3" src = "/artwork/pole.png">
+                        <img id = "pole4" src = "/artwork/flags.png">
                     </div>
                 </div>
             </div>

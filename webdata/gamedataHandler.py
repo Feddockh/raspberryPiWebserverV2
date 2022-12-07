@@ -1,5 +1,5 @@
 # Enable extensions
-#import pyftdi.serialext
+import pyftdi.serialext
 import mysql.connector
 import json
 import time
@@ -15,13 +15,15 @@ def formatTime(totalSeconds):
 
 
 # Open a serial port on the FTDI device interface @ 9600 baud
-#port = pyftdi.serialext.serial_for_url('ftdi://ftdi:ft-x:08-15/1', baudrate=9600)
+port = pyftdi.serialext.serial_for_url('ftdi://ftdi:ft-x:08-15/1', baudrate=9600)
 
 # Initialize values
 second = 0
 lastSecond = 0
+lastPole = 0
 buffer = 10
 maxSeconds = 300
+maxPole = 4
 json_file = '/var/www/html/data.json'
 
 # TODO: Write code to make sure that tables are set up properly
@@ -31,22 +33,26 @@ while (True):
 
     # Receive bytes and decode into characters
     # TODO: decrease the interval of the PLC writing data to serial so that this script runs more frequently
-    #data = port.read(3)
-    #data = data.decode('UTF-8')
-
+    data = port.read(5)
+    data = data.decode('UTF-8')
+    data = data.split('-')
+ 
     # Simulation
-    time.sleep(0.5)
-    with open('/home/vce/Project/timeSim.txt') as f:
-        data = f.read(3)
+    #time.sleep(0.5)
+    #with open('/home/vce/Project/timeSim.txt') as f:
+    #    data = f.read(3)
 
     # Convert string data to numerical seconds value for comparison
     # ERROR: ValueError: invalid literal for int() with base 10: ''
-    second = int(data)
+    second = int(data[0])
+    pole = int(data[1])
 
     # TODO: Incorperate a 'next up' feature
 
+    # TODO: Incorperate number of polls completed, add that into logic that determines when to move names from queue into scoreboard
+
     # If the second changed, then update the time (JSON)
-    if (second != lastSecond):
+    if (second != lastSecond or pole != lastPole):
 
         # Load data from the json file
         with open(json_file) as f:
@@ -58,6 +64,9 @@ while (True):
         # Update the clock's time value in the dictionary
         playerInfo["clockTime"] = formatTime(maxSeconds - second)
 
+        # Update the pole value in the dictionary
+        playerInfo["pole"] = pole
+
         # Repackage the updated dictionary data as a json-formatted string
         json_string = json.dumps(playerInfo, indent = 4)
 
@@ -66,7 +75,7 @@ while (True):
             f.write(json_string)
  
     # If the game is completed, store the players time (SQL) and transfer the player from queue to the leaderboard (SQL), check for a new player and move them into the current player spot (SQL -> JSON)
-    if (second == 0 and lastSecond > buffer):
+    if (second == 0 and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
         
         # Connect to the SQL database
         dbConnection = mysql.connector.connect(
@@ -98,13 +107,14 @@ while (True):
 
             # Update the time and the score for the player
             playerTime = formatTime(lastSecond)
-            playerScore = lastSecond
-            query = "UPDATE queue SET time = '%s', score = %d WHERE id = %d" % (playerTime, playerScore, playerID)
+            playerPoles = lastPole
+            playerScore = (maxSeconds - lastSecond) * 10 + playerPoles
+            query = "UPDATE queue SET time = '%s', poles = %d, score = %d WHERE id = %d" % (playerTime, playerPoles, playerScore, playerID)
             cursor.execute(query)
             dbConnection.commit()
 
             # Copy the player's info from the queue into the leaderboard
-            query = "INSERT INTO scoreboard (username, time, score) SELECT username, time, score FROM queue WHERE id = %d" % playerID
+            query = "INSERT INTO scoreboard (username, time, poles, score) SELECT username, time, poles, score FROM queue WHERE id = %d" % playerID
             cursor.execute(query)
             dbConnection.commit()
             
@@ -144,6 +154,7 @@ while (True):
         dbConnection.close()
 
     lastSecond = second
+    lastPole = pole
 
 
 
