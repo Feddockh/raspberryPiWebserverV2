@@ -34,6 +34,7 @@ while (True):
     # Receive bytes and decode into characters
     # TODO: decrease the interval of the PLC writing data to serial so that this script runs more frequently
     data = port.read(5)
+    print(data)
     data = data.decode('UTF-8')
     data = data.split('-')
  
@@ -47,18 +48,20 @@ while (True):
         # Pull the next up player and add them to the json file as well (also helps when skipping players)
         # Potentially absorb the tableHandler php script and put that data into the json file as well (reduces the amount of entries into the sql database since other users will now be pulling from the php file)
             # Remove table tags from the string returned by the php script and move table into index.html and then properly format table in css (fixes table size bug)
-     
+    
 
     # Convert string data to numerical seconds value for comparison
     second = int(data[0])
     pole = int(data[1])
 
+
+    # Load in the data from the json file
+    with open(json_file) as f:
+        playerInfo = json.load(f)
+
+
     # If the second changed, then update the time (JSON)
     if (second != lastSecond or pole != lastPole):
-
-        # Load data from the json file
-        with open(json_file) as f:
-            playerInfo = json.load(f)
 
         # Update the player's time value in the dictionary
         playerInfo["playerTime"] = formatTime(second)
@@ -69,44 +72,74 @@ while (True):
         # Update the pole value in the dictionary
         playerInfo["pole"] = pole
 
-        # Repackage the updated dictionary data as a json-formatted string
-        json_string = json.dumps(playerInfo, indent = 4)
 
-        # Write the json-formatted string back to our json file
-        with open(json_file, 'w') as f:
-            f.write(json_string)
-    
+    # Connect to the SQL database
+    dbConnection = mysql.connector.connect(
+        host = "localhost",
+        user = "vce",
+        password = "Volvo1927",
+        database = "vce"
+    )
+
+    # Create a cursor
+    cursor = dbConnection.cursor()
+
+    # Fetch the number of rows in the queue table
+    query = "SELECT COUNT(*) FROM queue"
+    cursor.execute(query)
+    data = cursor.fetchone()
+    rows = int(data[0])
+
+
+    # If there are rows in the table then update the username of the current and next player
+    if (rows >= 1):
+
+        # Find the 2 earliest usernames entered into the queue
+        query = "SELECT username FROM queue ORDER BY id ASC LIMIT 2"
+        cursor.execute(query)
+        data = cursor.fetchall()
+
+        # Find the username of the current player in the json file
+        playerUsername = str(data[0])
+        playerUsername = playerUsername.strip("('',)")
+
+        # Find the username of the next player in the json file (if there is one)
+        if (rows >= 2):
+            nextPlayerUsername = str(data[1])
+            nextPlayerUsername = nextPlayerUsername.strip("('',)")
+        else:
+            nextPlayerUsername = ""
+
+    # If the are no rows, and the game is running, then set the username to 'error'
+    elif (rows == 0 and second != lastSecond):
+
+        # Return error to display on screen
+        playerUsername = "ERR: NO_PLAYER"
+        nextPlayerUsername = ""
+
+    # If there are no rows in the table update the username to be blank
+    else:
+        
+        # Blank player names
+        playerUsername = ""
+        nextPlayerUsername = ""
+
+    # Update the current and next player's usernames
+    playerInfo["player"] = playerUsername
+    playerInfo["nextPlayer"] = nextPlayerUsername
+
 
     # If the game is completed, store the players time (SQL) and transfer the player from queue to the leaderboard (SQL), check for a new player and move them into the current player spot (SQL -> JSON)
     if (second == 0 and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
-        
-        # Connect to the SQL database
-        dbConnection = mysql.connector.connect(
-            host = "localhost",
-            user = "vce",
-            password = "Volvo1927",
-            database = "vce"
-        )
-
-        # Create a cursor
-        cursor = dbConnection.cursor()
-
-        # Fetch the number of rows in the queue table
-        query = "SELECT COUNT(*) FROM queue"
-        cursor.execute(query)
-        data = cursor.fetchone()
-        rows = int(data[0])
-
+      
         # Update and transfer the current player's info if they exist in the queue
         if (rows >= 1):
 
-            # Find the earliest username entered into the queue
+            # Fetch the number of rows in the queue table
             query = "SELECT MIN(id) FROM queue"
             cursor.execute(query)
             data = cursor.fetchone()
             playerID = int(data[0])
-
-            # TODO: Check that the username matches the one in the json file, maybe even use that username to specify the row instead of the id
 
             # Update the time and the score for the player
             playerTime = formatTime(lastSecond)
@@ -129,6 +162,7 @@ while (True):
         # Update the next player if they are in the queue
         if (rows > 1):
 
+            # TODO: I feel like this should be sorted by ASC and not DESC
             # Find the next earliest username entered into the queue
             query = "SELECT username FROM queue ORDER BY id DESC LIMIT 1"
             cursor.execute(query)
@@ -146,15 +180,15 @@ while (True):
         # Update the username value in the dictionary
         playerInfo["player"] = playerUsername
 
-        # Repackage the updated dictionary data as a json-formatted string
-        json_string = json.dumps(playerInfo, indent = 4)
+    # Repackage the updated dictionary data as a json-formatted string
+    json_string = json.dumps(playerInfo, indent = 4)
 
-        # Write the json-formatted string back to our json file
-        with open(json_file, 'w') as f:
-            f.write(json_string)
+    # Write the json-formatted string back to our json file
+    with open(json_file, 'w') as f:
+        f.write(json_string)
         
-        cursor.close()
-        dbConnection.close()
+    cursor.close()
+    dbConnection.close()
 
     lastSecond = second
     lastPole = pole

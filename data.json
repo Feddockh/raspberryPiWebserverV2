@@ -1,6 +1,7 @@
 {
-    "player": "",
-    "playerTime": "0:00",
-    "clockTime": "5:00",
-    "pole": 0
+    "player": "test",
+    "playerTime": "5:00",
+    "clockTime": "0:00",
+    "pole": 0,
+    "nextPlayer": ""
 }
