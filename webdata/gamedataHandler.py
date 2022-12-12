@@ -43,13 +43,7 @@ while (True):
     #with open('/home/vce/Project/timeSim.txt') as f:
     #    data = f.read(3)
 
-    # TODO: Make it so that SQL database is checked each cycle
-        # Check to see if lowest id name matches the json file, and update it if it does not (this will allow us to skip players)
-        # Pull the next up player and add them to the json file as well (also helps when skipping players)
-        # Potentially absorb the tableHandler php script and put that data into the json file as well (reduces the amount of entries into the sql database since other users will now be pulling from the php file)
-            # Remove table tags from the string returned by the php script and move table into index.html and then properly format table in css (fixes table size bug)
     
-
     # Convert string data to numerical seconds value for comparison
     second = int(data[0])
     pole = int(data[1])
@@ -84,18 +78,21 @@ while (True):
     # Create a cursor
     cursor = dbConnection.cursor()
 
-
-    # Table stuff here for now
+    # Update the scoreboard
+    # Fetch the top 10 ranked players, and their stats, from the scoreboard
     query = "SELECT username, time, poles, score FROM scoreboard ORDER BY score DESC LIMIT 10"
     cursor.execute(query)
     data = cursor.fetchall()
 
+    # Iterate through the top 10 rows from the json file while inserting data from the SQL database
     i = 1
     for x in data:
         playerInfo["scoreboard"][str(i)]["username"] = x[0]
         playerInfo["scoreboard"][str(i)]["time"] = x[1]
         playerInfo["scoreboard"][str(i)]["poles"] = x[2]
         i = i + 1
+
+    # If there are less than 10 players in the scoreboard, then fill the additional rows with blank data
     while (i <= 10):
         playerInfo["scoreboard"][str(i)]["username"] = ""
         playerInfo["scoreboard"][str(i)]["time"] = ""
@@ -108,7 +105,6 @@ while (True):
     cursor.execute(query)
     data = cursor.fetchone()
     rows = int(data[0])
-
 
     # If there are rows in the table then update the username of the current and next player
     if (rows >= 1):
@@ -178,6 +174,7 @@ while (True):
             cursor.execute(query)
             dbConnection.commit()
 
+        # TODO: remove this section because it is repetitive
         # Update the next player if they are in the queue
         if (rows > 1):
 

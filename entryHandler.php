@@ -87,10 +87,9 @@
             $stmt->execute();
             echo "New records created successfully";
             $stmt->close();
-            
-            $connection->close();
         }
 
+        $connection->close();
     }
 
 ?>
