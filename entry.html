@@ -8,8 +8,9 @@
     $(document).ready(function() {
         $("#getUserInfo").click(function () {
             var username = $("#username").val();
-            $.post('entryHandler.php', {'username': username});
-            alert("Participant Entered");
+            $.post('entryHandler.php', {'username': username}, function(data) {
+                alert(data);
+            });
             $("#username").val("");
         });
     });
@@ -18,7 +19,7 @@
 </head>
 
 <body>
-    username: <input type="text" id="username"><br>
+    username: <input type="text" id="username"> (max 20 characters) <br>
     <button type="button" id="getUserInfo">Submit</button>
 </body>
 

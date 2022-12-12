@@ -1,39 +1,39 @@
 {
-    "player": "test",
+    "player": "hey",
     "playerTime": "5:00",
     "clockTime": "0:00",
     "pole": 0,
-    "nextPlayer": "test",
+    "nextPlayer": "",
     "scoreboard": {
         "1": {
-            "username": " Seth",
-            "time": "0:39",
-            "poles": 4
-        },
-        "2": {
             "username": "filip",
             "time": "0:55",
             "poles": 4
         },
-        "3": {
+        "2": {
             "username": "Just Tony",
             "time": "0:58",
             "poles": 4
         },
-        "4": {
+        "3": {
             "username": "shovelman",
             "time": "2:39",
             "poles": 4
         },
-        "5": {
+        "4": {
             "username": "rudgehoist",
             "time": "4:14",
             "poles": 4
         },
-        "6": {
+        "5": {
             "username": "Brajovic Harness Company",
             "time": "5:00",
             "poles": 2
+        },
+        "6": {
+            "username": "",
+            "time": "",
+            "poles": ""
         },
         "7": {
             "username": "",

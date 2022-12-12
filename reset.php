@@ -47,6 +47,7 @@
         echo "Error creating table: " . $connection->error . "<br>";
     }
 
+    /*
     // Create a table for scoreboard
     $sql = "CREATE OR REPLACE TABLE scoreboard (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -60,6 +61,7 @@
     } else {
         echo "Error creating table: " . $connection->error . "<br>";
     }
+    */
 
     $connection->close();
 ?>
