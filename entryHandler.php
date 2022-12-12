@@ -80,25 +80,6 @@
         // If length is valid, and entry is not explicit, and it is not a duplicate entry, then add to the database and json file
         if ($invalidLength == False && $explicit == False && $duplicate == False) {
 
-            // Return all rows from the queue table
-            $sql = "SELECT * FROM queue";
-            $result = $connection->query($sql);
-
-            // If the number of players in the queue is empty, update the json file first
-            if ($result->num_rows == 0) {
-
-                // Get and decode the data from the json file
-                $json_string = file_get_contents($json_file);
-                $playerInfo = json_decode($json_string, true);
-
-                // Update the player's username
-                $playerInfo['player'] = $_POST['username'];
-
-                // Encode and put the data back into the json file
-                $json_string = json_encode($playerInfo, JSON_PRETTY_PRINT);
-                file_put_contents($json_file, $json_string);
-            }
-
             // Bind username parameter for insertion after preparing the SQL statement to protect against SQL injections
             $stmt = $connection->prepare("INSERT INTO queue (username)
                 VALUES (?)");
