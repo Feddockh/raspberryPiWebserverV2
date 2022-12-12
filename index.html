@@ -36,12 +36,30 @@
                 if (data["pole"] == 4) {
                     $("#pole4").css('visibility', 'visible');
                 }
+
+                var scoreboard = "<table>" +
+                    "<tr>" +
+                        "<th> Rank </th>" +
+                        "<th> Username </th>" +
+                        "<th> Time </th>" +
+                        "<th> Poles </th>" +
+                    "</tr>";
+                for (var i=1; i<=10; i++) {
+                    scoreboard += "<tr>" + 
+                        "<td>" + i + "</td>" +
+                        "<td>" + data["scoreboard"][i]["username"] + "</td>" +
+                        "<td>" + data["scoreboard"][i]["time"] + "</td>" +
+                        "<td>" + data["scoreboard"][i]["poles"] + "</td>" +
+                    "</tr>";
+                }
+                scoreboard += "</table>";
+                
+                $("#scoreboard").html(scoreboard);
+
+                $("#next-player").html(data["nextPlayer"]);
+
             }
         });
-
-        $.ajax({url: "tableHandler.php", success: function(data) {
-            $("#scoreboard").html(data);
-        }});
     }
   
     $(document).ready(function() { 
@@ -82,6 +100,10 @@
                         <img id = "pole3" src = "/artwork/pole.png">
                         <img id = "pole4" src = "/artwork/flags.png">
                     </div>
+                </div>
+                <div id = "next-player-container">
+                    <span> Next Up: </span>
+                    <span id = "next-player"></span>
                 </div>
             </div>
             <div class = "flex-right-container">

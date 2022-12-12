@@ -34,7 +34,7 @@ while (True):
     # Receive bytes and decode into characters
     # TODO: decrease the interval of the PLC writing data to serial so that this script runs more frequently
     data = port.read(5)
-    print(data)
+    #print(data)
     data = data.decode('UTF-8')
     data = data.split('-')
  
@@ -83,6 +83,25 @@ while (True):
 
     # Create a cursor
     cursor = dbConnection.cursor()
+
+
+    # Table stuff here for now
+    query = "SELECT username, time, poles, score FROM scoreboard ORDER BY score DESC LIMIT 10"
+    cursor.execute(query)
+    data = cursor.fetchall()
+
+    i = 1
+    for x in data:
+        playerInfo["scoreboard"][str(i)]["username"] = x[0]
+        playerInfo["scoreboard"][str(i)]["time"] = x[1]
+        playerInfo["scoreboard"][str(i)]["poles"] = x[2]
+        i = i + 1
+    while (i <= 10):
+        playerInfo["scoreboard"][str(i)]["username"] = ""
+        playerInfo["scoreboard"][str(i)]["time"] = ""
+        playerInfo["scoreboard"][str(i)]["poles"] = ""
+        i = i + 1
+
 
     # Fetch the number of rows in the queue table
     query = "SELECT COUNT(*) FROM queue"
@@ -186,7 +205,7 @@ while (True):
     # Write the json-formatted string back to our json file
     with open(json_file, 'w') as f:
         f.write(json_string)
-        
+    
     cursor.close()
     dbConnection.close()
 
