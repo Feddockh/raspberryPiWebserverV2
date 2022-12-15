@@ -13,9 +13,6 @@ def formatTime(totalSeconds):
         return "%d:%d" % (minutes, seconds)
 
 
-# Open a serial port on the FTDI device interface @ 9600 baud
-port = pyftdi.serialext.serial_for_url('ftdi://ftdi:ft-x:08-15/1', baudrate=9600)
-
 # Initialize values
 second = 0
 lastSecond = 0
@@ -25,7 +22,13 @@ maxSeconds = 300
 maxPole = 4
 json_file = '/var/www/html/data.json'
 
-# Setup the json file for use
+
+# Setup serial communication
+# Open a serial port on the FTDI device interface @ 9600 baud
+port = pyftdi.serialext.serial_for_url('ftdi://ftdi:ft-x:08-15/1', baudrate=9600)
+
+
+# Setup the json file in case of data loss
 # Dictionary with json format for setup
 json_file_format = {'player': '', 'playerTime': '0:00', 'clockTime': '5:00', 'pole': 0, 'nextPlayer': '', 'scoreboard': {'1': {'username': 'brian', 'time': '0:27', 'poles': 4}, '2': {'username': 'bart', 'time': '0:29', 'poles': 4}, '3': {'username': 'filip', 'time': '0:55', 'poles': 4}, '4': {'username': 'Just Tony', 'time': '0:58', 'poles': 4}, '5': {'username': 'shovelman', 'time': '2:39', 'poles': 4}, '6': {'username': 'joe', 'time': '2:41', 'poles': 4}, '7': {'username': 'rudgehoist', 'time': '4:14', 'poles': 4}, '8': {'username': 'Brajovic Harness Company', 'time': '5:00', 'poles': 2}, '9': {'username': 'checking', 'time': '5:00', 'poles': 0}, '10': {'username': '', 'time': '', 'poles': ''}}}
 
@@ -36,8 +39,48 @@ json_string = json.dumps(json_file_format, indent = 4)
 with open(json_file, 'w') as f:
     f.write(json_string)
 
+# Setup SQL incase of data loss
+# Connect to SQL
+connection = mysql.connector.connect(
+    host = "localhost",
+    user = "vce",
+    password = "Volvo1927"
+)
 
-# TODO: Write code to make sure that tables are set up properly
+# Create a cursor
+cursor = connection.cursor()
+
+# Check SQL database exists, and create it if it does not
+query = "CREATE DATABASE IF NOT EXISTS vce"
+cursor.execute(query)
+
+# Close out of SQL
+cursor.close()
+connection.close()
+
+# Connect to the SQL database
+dbConnection = mysql.connector.connect(
+    host = "localhost",
+    user = "vce",
+    password = "Volvo1927",
+    database = "vce"
+)
+
+# Create a cursor
+cursor = dbConnection.cursor()
+
+# Check queue table exists, and create it if it does not
+query = "CREATE TABLE IF NOT EXISTS queue (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(30) NOT NULL, time VARCHAR(10), poles INT(1), score INT(6))"
+cursor.execute(query)
+
+# Check scoreboard table exists, and create it if it does not
+query = "CREATE TABLE IF NOT EXISTS scoreboard (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, username VARCHAR(30) NOT NULL, time VARCHAR(10), poles INT(1), score INT(6))"
+cursor.execute(query)
+
+# Close out of SQL
+cursor.close()
+connection.close()
+
 
 # Begin loop
 while (True):
@@ -165,8 +208,6 @@ while (True):
 
         # Update and transfer the current player's info if they exist in the queue
         if (rows >= 1):
-
-            # TODO: Complete with username instead of min id?
 
             # Fetch the number of rows in the queue table
             query = "SELECT MIN(id) FROM queue"

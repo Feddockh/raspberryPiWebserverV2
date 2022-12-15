@@ -34,7 +34,7 @@
     }
 
     // Create a table for queue
-    $sql = "CREATE OR REPLACE TABLE queue (
+    $sql = "CREATE TABLE IF NOT EXISTS queue (
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(30) NOT NULL,
         time VARCHAR(10),
