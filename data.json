@@ -1,59 +1,59 @@
 {
-    "player": "hayhay",
-    "playerTime": "5:00",
-    "clockTime": "0:00",
-    "pole": 0,
+    "player": "Test",
+    "playerTime": "1:56",
+    "clockTime": "3:04",
+    "pole": 4,
     "nextPlayer": "",
     "scoreboard": {
         "1": {
-            "username": "filip",
-            "time": "0:55",
+            "username": "Seth2",
+            "time": "1:50",
             "poles": 4
         },
         "2": {
-            "username": "Just Tony",
-            "time": "0:58",
+            "username": "Seth",
+            "time": "2:12",
             "poles": 4
         },
         "3": {
-            "username": "shovelman",
-            "time": "2:39",
+            "username": "Ben",
+            "time": "2:14",
             "poles": 4
         },
         "4": {
-            "username": "rudgehoist",
-            "time": "4:14",
+            "username": "Mike",
+            "time": "2:30",
             "poles": 4
         },
         "5": {
-            "username": "Brajovic Harness Company",
-            "time": "5:00",
-            "poles": 2
+            "username": "Brian",
+            "time": "2:44",
+            "poles": 4
         },
         "6": {
-            "username": "",
-            "time": "",
-            "poles": ""
+            "username": "Chris",
+            "time": "3:23",
+            "poles": 4
         },
         "7": {
-            "username": "",
-            "time": "",
-            "poles": ""
+            "username": "Filip",
+            "time": "3:46",
+            "poles": 4
         },
         "8": {
-            "username": "",
-            "time": "",
-            "poles": ""
+            "username": "Hayden",
+            "time": "3:50",
+            "poles": 4
         },
         "9": {
-            "username": "",
-            "time": "",
-            "poles": ""
+            "username": "Rouse",
+            "time": "3:54",
+            "poles": 4
         },
         "10": {
-            "username": "",
-            "time": "",
-            "poles": ""
+            "username": "Hayden2",
+            "time": "3:56",
+            "poles": 4
         }
     }
 }

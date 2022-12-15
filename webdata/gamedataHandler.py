@@ -2,7 +2,6 @@
 import pyftdi.serialext
 import mysql.connector
 import json
-import time
 
 def formatTime(totalSeconds):
     seconds = totalSeconds % 60
@@ -26,6 +25,18 @@ maxSeconds = 300
 maxPole = 4
 json_file = '/var/www/html/data.json'
 
+# Setup the json file for use
+# Dictionary with json format for setup
+json_file_format = {'player': '', 'playerTime': '0:00', 'clockTime': '5:00', 'pole': 0, 'nextPlayer': '', 'scoreboard': {'1': {'username': 'brian', 'time': '0:27', 'poles': 4}, '2': {'username': 'bart', 'time': '0:29', 'poles': 4}, '3': {'username': 'filip', 'time': '0:55', 'poles': 4}, '4': {'username': 'Just Tony', 'time': '0:58', 'poles': 4}, '5': {'username': 'shovelman', 'time': '2:39', 'poles': 4}, '6': {'username': 'joe', 'time': '2:41', 'poles': 4}, '7': {'username': 'rudgehoist', 'time': '4:14', 'poles': 4}, '8': {'username': 'Brajovic Harness Company', 'time': '5:00', 'poles': 2}, '9': {'username': 'checking', 'time': '5:00', 'poles': 0}, '10': {'username': '', 'time': '', 'poles': ''}}}
+
+# Repackage the setup dictionary data as a json-formatted string
+json_string = json.dumps(json_file_format, indent = 4)
+
+# Write the json-formatted setup string to our json file
+with open(json_file, 'w') as f:
+    f.write(json_string)
+
+
 # TODO: Write code to make sure that tables are set up properly
 
 # Begin loop
@@ -33,15 +44,15 @@ while (True):
 
     # Receive bytes and decode into characters
     # TODO: decrease the interval of the PLC writing data to serial so that this script runs more frequently
+    # TODO: Implement 'END' feature
     data = port.read(5)
-    #print(data)
     data = data.decode('UTF-8')
     data = data.split('-')
- 
-    # Simulation
-    #time.sleep(0.5)
-    #with open('/home/vce/Project/timeSim.txt') as f:
-    #    data = f.read(3)
+
+
+    # Check for shutdown
+    if (data[0] == 'OFF'):
+        break
 
     
     # Convert string data to numerical seconds value for comparison
@@ -126,7 +137,7 @@ while (True):
             nextPlayerUsername = ""
 
     # If the are no rows, and the game is running, then set the username to 'error'
-    elif (rows == 0 and second != lastSecond):
+    elif (rows == 0 and second > 0):
 
         # Return error to display on screen
         playerUsername = "ERR: NO_PLAYER"
@@ -143,12 +154,21 @@ while (True):
     playerInfo["player"] = playerUsername
     playerInfo["nextPlayer"] = nextPlayerUsername
 
+    # Repackage the updated dictionary data as a json-formatted string
+    json_string = json.dumps(playerInfo, indent = 4)
+
+    # Write the json-formatted string back to our json file
+    with open(json_file, 'w') as f:
+        f.write(json_string)
+
 
     # If the game is completed, store the players time (SQL) and transfer the player from queue to the leaderboard (SQL), check for a new player and move them into the current player spot (SQL -> JSON)
     if (second == 0 and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
       
         # Update and transfer the current player's info if they exist in the queue
         if (rows >= 1):
+
+            # TODO: Complete with username instead of min id?
 
             # Fetch the number of rows in the queue table
             query = "SELECT MIN(id) FROM queue"
@@ -173,41 +193,14 @@ while (True):
             query = "DELETE FROM queue WHERE id = %d" % playerID
             cursor.execute(query)
             dbConnection.commit()
-
-        # TODO: remove this section because it is repetitive
-        # Update the next player if they are in the queue
-        if (rows > 1):
-
-            # TODO: I feel like this should be sorted by ASC and not DESC
-            # Find the next earliest username entered into the queue
-            query = "SELECT username FROM queue ORDER BY id DESC LIMIT 1"
-            cursor.execute(query)
-            data = cursor.fetchone()
-            playerUsername = data[0]
-        
-        # If there is no next player, then insert a blank player name
-        else:
-            playerUsername = ""
-
-        # Load data from the json file
-        with open(json_file) as f:
-            playerInfo = json.load(f)
-
-        # Update the username value in the dictionary
-        playerInfo["player"] = playerUsername
-
-    # Repackage the updated dictionary data as a json-formatted string
-    json_string = json.dumps(playerInfo, indent = 4)
-
-    # Write the json-formatted string back to our json file
-    with open(json_file, 'w') as f:
-        f.write(json_string)
     
     cursor.close()
     dbConnection.close()
 
     lastSecond = second
     lastPole = pole
+
+exit(0)
 
 
 

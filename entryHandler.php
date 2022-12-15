@@ -5,6 +5,8 @@
     $explicit = False;
     $duplicate = False;
 
+    // TODO: Check against invalid characters
+
     // Check if there are new names to be added
     if (array_key_exists('username', $_POST)) {
 
@@ -76,7 +78,7 @@
                 }
             }
         }
-
+ 
         // If length is valid, and entry is not explicit, and it is not a duplicate entry, then add to the database and json file
         if ($invalidLength == False && $explicit == False && $duplicate == False) {
 
