@@ -1,8 +1,8 @@
 {
-    "player": "Test",
-    "playerTime": "1:56",
-    "clockTime": "3:04",
-    "pole": 4,
+    "player": "ERR: NO_PLAYER",
+    "playerTime": "0:22",
+    "clockTime": "4:38",
+    "pole": 0,
     "nextPlayer": "",
     "scoreboard": {
         "1": {

@@ -161,8 +161,8 @@ while (True):
 
 
     # If the game is completed, store the players time (SQL) and transfer the player from queue to the leaderboard (SQL), check for a new player and move them into the current player spot (SQL -> JSON)
-    if (second == 0 and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
-      
+    if (second < buffer and lastSecond > buffer and (lastSecond == maxSeconds or lastPole == maxPole)):
+
         # Update and transfer the current player's info if they exist in the queue
         if (rows >= 1):
 
