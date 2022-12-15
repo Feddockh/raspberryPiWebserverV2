@@ -2,16 +2,29 @@
 <html lang="en">
 
 <head>
+    <link rel = "stylesheet" href = "entryStyle.css">
     <script src = "jquery-3.6.1.min.js"></script>
     <script type = "text/javascript">
 
     $(document).ready(function() {
         $("#getUserInfo").click(function () {
-            var username = $("#username").val();
+            var username = $("#username-entry").val();
             $.post('entryHandler.php', {'username': username}, function(data) {
                 alert(data);
             });
-            $("#username").val("");
+            $("#username-entry").val("");
+        });
+
+        $("#username-entry").keypress(function(e){
+            var keyCode = e.which;
+ 
+            // Restrict special characters from  entry into input box
+            if ( !( (keyCode >= 48 && keyCode <= 57) /* 48-57 - (0-9)Numbers */
+            ||(keyCode >= 65 && keyCode <= 90) /* 65-90 - (A-Z) */
+            || (keyCode >= 97 && keyCode <= 122) ) /* 97-122 - (a-z) */
+            && keyCode != 8 && keyCode != 32) { /* 8 - (backspace) 32 - (space) */
+            e.preventDefault();
+            }
         });
     });
 
@@ -19,8 +32,17 @@
 </head>
 
 <body>
-    username: <input type="text" id="username"> (max 20 characters) <br>
-    <button type="button" id="getUserInfo">Submit</button>
+    <div class = "full-screen">
+        <div class = "top-band">
+            <img id = "logo" src = "/artwork/Volvo Logo.png">
+        </div>
+        <div class = "flex-container">
+            <h3 id = "username">Username</h3>
+            <input type="text" id="username-entry" maxlength="20">
+            <button type="button" id="getUserInfo">Submit</button>
+        </div>
+        <div class = "bottom-band"></div>
+    </div>
 </body>
 
 </html>

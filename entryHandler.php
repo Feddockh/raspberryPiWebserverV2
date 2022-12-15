@@ -6,6 +6,7 @@
     $duplicate = False;
 
     // TODO: Check against invalid characters
+    // TODO: Prevent empty entries
 
     // Check if there are new names to be added
     if (array_key_exists('username', $_POST)) {
@@ -23,7 +24,7 @@
         $playerUsername = $_POST['username'];
 
         // Entry must be validated, begin with string length
-        if (strlen($playerUsername) > 20) {
+        if (strlen($playerUsername) > 20 || strlen($playerUsername) < 1) {
             $invalidLength = True;
             echo "Invalid Length";
         }

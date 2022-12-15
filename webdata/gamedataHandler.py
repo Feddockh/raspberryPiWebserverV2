@@ -43,8 +43,6 @@ with open(json_file, 'w') as f:
 while (True):
 
     # Receive bytes and decode into characters
-    # TODO: decrease the interval of the PLC writing data to serial so that this script runs more frequently
-    # TODO: Implement 'END' feature
     data = port.read(5)
     data = data.decode('UTF-8')
     data = data.split('-')

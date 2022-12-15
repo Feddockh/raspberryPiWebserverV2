@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'Volvo Broad';
+    src: url('fonts/volvo_broad_pro_digital.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Medium';
+    src: url('fonts/VolvoNovum-Medium.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Regular';
+    src: url('fonts/VolvoNovum-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum SemiLight';
+    src: url('fonts/VolvoNovum-SemiLight.otf');
+}
+
+@font-face {
+    font-family: 'Volvo Novum Light';
+    src: url('fonts/VolvoNovum-Light.otf');
+} 
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.full-screen {
+    display: block;
+    width: 100vw;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: rgb(160, 186, 184);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.top-band {
+    display: block;
+    width: 100%;
+    height: 13%;
+    border: 0;
+    padding: 0;
+    margin: 2% 0 1% 0;
+    background-color: rgb(8, 68, 84);
+}
+
+img {
+    display: block;
+    width: min-content;
+    height: 100%;
+    margin: auto;
+    border: 0;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 78%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+#username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 10%;
+    margin: 0 35%;
+    border: 3px solid white;
+    padding: 0;
+    color: white;
+    font-family: 'Volvo Novum SemiLight';
+    font-size: 3vw;
+    background-color: rgb(8, 68, 84);
+}
+
+input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 10%;
+    margin: 2% 15%;
+    border: 3px solid rgb(8, 68, 84);
+    padding: 0;
+    color: black;
+    font-family: 'Volvo Novum Regular';
+    font-size: 4vw;
+    text-align: center;
+    background-color: white;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 7%;
+    margin: 0 45%;
+    border: 3px solid white;
+    padding: 0;
+    color: white;
+    font-family: 'Volvo Novum Regular';
+    font-size: 2vw;
+    text-align: center;
+    background-color: rgb(8, 68, 84);
+}
+
+
+.bottom-band {
+    display: block;
+    width: 80%;
+    height: 5%;
+    border: 0;
+    padding: 0;
+    margin: 1% 10% 0 10%;
+    background-color: rgb(8, 68, 84);
+}
